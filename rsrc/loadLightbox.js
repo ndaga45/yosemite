@@ -87,39 +87,50 @@ function lightboxTrigger() {
     document.body.insertAdjacentHTML('beforeend', lightboxHTML);
 
     var closeButton = document.getElementById('close');
-    closeButton.onclick = function() {
-        var lightbox = document.getElementById('lightbox');
-        lightbox.parentNode.removeChild(lightbox);
-    }
+    closeButton.onclick = closeLightbox;
 
     document.onkeydown = function(event) {
         if (event.keyCode == 27) { // escape key maps to keycode 27
-            var lightbox = document.getElementById('lightbox');
-            lightbox.parentNode.removeChild(lightbox);
+            closeLightbox();
+        }
+        if (event.keyCode == 39) { // right arrow maps to keycode 39
+            nextImage(thumbnails);
+        }
+        if (event.keyCode == 37) { // left arrow maps to keycode 37
+            previousImage(thumbnails);
         }
     }
 
     var leftButton = document.getElementById('left');
-    leftButton.onclick = function() {
-        var newImage = thumbnails[currentImageIndex - 1].dataset.imgurl;
-        var newTitle = thumbnails[currentImageIndex - 1].dataset.title;
-        currentImageIndex--; 
-        var lightboxImage = document.getElementById('lightboxImage');
-        lightboxImage.src = newImage;
-
-        var lightboxTitle = document.getElementById('title');
-        lightboxTitle.innerHTML = newTitle;
-    }
+    leftButton.onclick = function() { previousImage(thumbnails); };
 
     var rightButton = document.getElementById('right');
-    rightButton.onclick = function() {
-        var newImage = thumbnails[currentImageIndex + 1].dataset.imgurl;
-        var newTitle = thumbnails[currentImageIndex + 1].dataset.title;
-        currentImageIndex++;
-        var lightboxImage = document.getElementById('lightboxImage');
-        lightboxImage.src = newImage;
+    rightButton.onclick = function() { nextImage(thumbnails); };
+}
 
-        var lightboxTitle = document.getElementById('title');
-        lightboxTitle.innerHTML = newTitle;
-    }
+function closeLightbox() {
+    var lightbox = document.getElementById('lightbox');
+    lightbox.parentNode.removeChild(lightbox);
+}
+
+function nextImage(thumbnails) {
+    var newImage = thumbnails[currentImageIndex + 1].dataset.imgurl;
+    var newTitle = thumbnails[currentImageIndex + 1].dataset.title;
+    currentImageIndex++;
+    var lightboxImage = document.getElementById('lightboxImage');
+    lightboxImage.src = newImage;
+
+    var lightboxTitle = document.getElementById('title');
+    lightboxTitle.innerHTML = newTitle;
+}
+
+function previousImage(thumbnails) {
+    var newImage = thumbnails[currentImageIndex - 1].dataset.imgurl;
+    var newTitle = thumbnails[currentImageIndex - 1].dataset.title;
+    currentImageIndex--; 
+    var lightboxImage = document.getElementById('lightboxImage');
+    lightboxImage.src = newImage;
+
+    var lightboxTitle = document.getElementById('title');
+    lightboxTitle.innerHTML = newTitle;
 }
