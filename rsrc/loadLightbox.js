@@ -28,17 +28,23 @@ function buildLightbox(response) {
 
     var grid = document.getElementById('grid');
     for (var i = 0; i < photos.length; i++) {
-        var thumbnail = document.createElement('div');
-        thumbnail.className = 'thumbnail';
-        thumbnail.style.backgroundImage = "url("+photos[i].url_m+")";
-        thumbnail.setAttribute('data-imgUrl', photos[i].url_m);
-        thumbnail.setAttribute('data-title', photos[i].title);
-        thumbnail.setAttribute('data-index', i);
-
+        var thumbnail = createThumbnail(photos[i], i);
         grid.appendChild(thumbnail);
     }
 
     attachLightboxTriggers();
+}
+
+// Create thumbnail of photo
+function createThumbnail(photo, index) {
+    var thumbnail = document.createElement('div');
+    thumbnail.className = 'thumbnail';
+    thumbnail.style.backgroundImage = "url("+photo.url_m+")";
+    thumbnail.setAttribute('data-imgUrl', photo.url_m);
+    thumbnail.setAttribute('data-title', photo.title);
+    thumbnail.setAttribute('data-index', index);
+
+    return thumbnail;
 }
 
 // Attach click handler to each thumbnail to open lightbox
@@ -59,9 +65,9 @@ function openLightbox() {
 
     var lightboxHTML =
         '<div id="lightbox">' +
-            '<span id="close">x</span>' +
-            '<span id="left"><</span>' +
-            '<span id="right">></span>' +
+            '<span id="close"></span>' +
+            '<span id="left"></span>' +
+            '<span id="right"></span>' +
             '<img id="lightboxImage" src="' + imageSrc +'" />' +
             '<p id="title">' + imageTitle + '<p>' +
         '</div>';
