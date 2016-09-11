@@ -1,49 +1,32 @@
-function loadLightbox() {
-    var APIparams = {
-        format: 'json',
-        method: 'flickr.photosets.getPhotos',
-        photoset_id: '72157604010317412',
-        api_key: 'f23ef6e2baf7ae9076b20d612c9e9438',
-        extras: 'url_m',
-        per_page: 20,
-        nojsoncallback: 1
-    };
+var NUM_IMAGES = 20;
+var API_PARAMS = {
+    format: 'json',
+    method: 'flickr.photosets.getPhotos',
+    photoset_id: '72157604010317412',
+    api_key: 'f23ef6e2baf7ae9076b20d612c9e9438',
+    extras: 'url_m',
+    per_page: NUM_IMAGES,
+    nojsoncallback: 1
+};
 
-    var APIurl = buildAPIUrl('https://api.flickr.com/services/rest/', APIparams);
+// Stores index of image currently displayed in lightbox
+var currentImageIndex = null;
+
+function loadLightbox() {
+    var APIurl = buildAPIUrl('https://api.flickr.com/services/rest/', API_PARAMS);
     httpGetAsync(APIurl, buildLightbox);
 }
 
-function buildAPIUrl(url, params) {
-    if (params) {
-        var queryString = '?';
-        var paramKeys = Object.keys(params);
-
-        for (var i = 0; i < paramKeys.length; i++) {
-            queryString += paramKeys[i] + '=' + params[paramKeys[i]] + '&';
-        }
-    }
-    return url + queryString;
-}
-
-function httpGetAsync(url, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.response);
-    }
-    xmlHttp.open("GET", url, true); // true for asynchronous 
-    xmlHttp.send(null);
-}
-
+// Create thumbnails of images returned from API and add to grid
 function buildLightbox(response) {
     var parsedResponse = JSON.parse(response);
     var photos = parsedResponse.photoset.photo;
 
+    // Remove loading gif before creating and adding image thumbnails
     var loading = document.getElementById('loading');
-    loading.parentNode.removeChild(loading);
+    loading.remove();
 
     var grid = document.getElementById('grid');
-
     for (var i = 0; i < photos.length; i++) {
         var thumbnail = document.createElement('div');
         thumbnail.className = 'thumbnail';
@@ -58,36 +41,47 @@ function buildLightbox(response) {
     attachLightboxTriggers();
 }
 
+// Attach click handler to each thumbnail to open lightbox
 function attachLightboxTriggers() {
     var thumbnails = document.getElementsByClassName('thumbnail');
     for (var i = 0; i < thumbnails.length; i++) {
-        thumbnails[i].addEventListener('click', lightboxTrigger);
+        thumbnails[i].addEventListener('click', openLightbox);
     }
 }
 
-var currentImageIndex = null;
-
-function lightboxTrigger() {
+// Open lightbox with controls and render clicked image
+function openLightbox() {
     var clickedThumbnail = this;
+
     var imageSrc = clickedThumbnail.dataset.imgurl;
     var imageTitle = clickedThumbnail.dataset.title;
     currentImageIndex = parseInt(clickedThumbnail.dataset.index);
 
-    var thumbnails = document.getElementsByClassName('thumbnail');
-
     var lightboxHTML =
-    '<div id="lightbox">' +
-        '<span id="close">x</span>' +
-        '<span id="left"><</span>' +
-        '<span id="right">></span>' +
-        '<img id="lightboxImage" src="' + imageSrc +'" />' +
-        '<p id="title">' + imageTitle + '<p>' +
-    '</div>';
-
+        '<div id="lightbox">' +
+            '<span id="close">x</span>' +
+            '<span id="left"><</span>' +
+            '<span id="right">></span>' +
+            '<img id="lightboxImage" src="' + imageSrc +'" />' +
+            '<p id="title">' + imageTitle + '<p>' +
+        '</div>';
     document.body.insertAdjacentHTML('beforeend', lightboxHTML);
+
+    buildLightboxControls();
+}
+
+// Attach click and key press handlers to close lightbox and view previous/next images
+function buildLightboxControls() {
+    var thumbnails = document.getElementsByClassName('thumbnail');
 
     var closeButton = document.getElementById('close');
     closeButton.onclick = closeLightbox;
+
+    var leftButton = document.getElementById('left');
+    leftButton.onclick = function() { previousImage(thumbnails); };
+
+    var rightButton = document.getElementById('right');
+    rightButton.onclick = function() { nextImage(thumbnails); };
 
     document.onkeydown = function(event) {
         if (event.keyCode == 27) { // escape key maps to keycode 27
@@ -100,21 +94,16 @@ function lightboxTrigger() {
             previousImage(thumbnails);
         }
     }
-
-    var leftButton = document.getElementById('left');
-    leftButton.onclick = function() { previousImage(thumbnails); };
-
-    var rightButton = document.getElementById('right');
-    rightButton.onclick = function() { nextImage(thumbnails); };
 }
 
 function closeLightbox() {
     var lightbox = document.getElementById('lightbox');
-    lightbox.parentNode.removeChild(lightbox);
+    lightbox.remove();
 }
 
+// Display next image in lightbox
 function nextImage(thumbnails) {
-    currentImageIndex = mod(currentImageIndex+1, 20);
+    currentImageIndex = mod(currentImageIndex+1, NUM_IMAGES);
 
     var newImage = thumbnails[currentImageIndex].dataset.imgurl;
     var newTitle = thumbnails[currentImageIndex].dataset.title;
@@ -126,8 +115,9 @@ function nextImage(thumbnails) {
     lightboxTitle.innerHTML = newTitle;
 }
 
+// Display prevoius image in lightbox
 function previousImage(thumbnails) {
-    currentImageIndex = mod(currentImageIndex-1, 20);
+    currentImageIndex = mod(currentImageIndex-1, NUM_IMAGES);
 
     var newImage = thumbnails[currentImageIndex].dataset.imgurl;
     var newTitle = thumbnails[currentImageIndex].dataset.title;
@@ -137,10 +127,4 @@ function previousImage(thumbnails) {
 
     var lightboxTitle = document.getElementById('title');
     lightboxTitle.innerHTML = newTitle;
-}
-
-// Javascripts native modulus function (%) actually behaves like the remainder operator
-// (which returns negative numbers) so this is a proper mod function
-function mod(n, m) {
-    return ((n % m) + m) % m;
 }
