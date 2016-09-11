@@ -3,16 +3,20 @@
 <html>
 
     <head>
-      <title>Yosemite</title>
-      <script type ="text/javascript" src="script.js"></script>
-      <link rel="stylesheet" type="text/css" href="styles.css">
+      <title>Yosemite National Park</title>
+
+      <link rel="stylesheet" type="text/css" href="rsrc/styles.css">
+
+      <script type="text/javascript" src="rsrc/loadLightbox.js"></script>
+      <script>
+        window.onload = loadLightbox;
+      </script>
     </head>
 
     <body>
         <h1>Yosemite National Park | Jeffrey Sullivan</h1>
-
-        <div id="grid">
-        </div>
+        <div id="loading"></div>
+        <div id="grid"></div>
     </body>
 
 </html>
