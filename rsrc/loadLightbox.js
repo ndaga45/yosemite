@@ -49,6 +49,7 @@ function buildLightbox(response) {
         thumbnail.className = 'thumbnail';
         thumbnail.style.backgroundImage = "url("+photos[i].url_m+")";
         thumbnail.setAttribute('data-imgUrl', photos[i].url_m);
+        thumbnail.setAttribute('data-index', i);
 
         grid.appendChild(thumbnail);
     }
@@ -63,15 +64,22 @@ function attachLightboxTriggers() {
     }
 }
 
+var currentImageIndex = null;
+
 function lightboxTrigger() {
     var clickedThumbnail = this;
-    var imageSrc = clickedThumbnail.getAttribute('data-imgUrl');
+    var imageSrc = clickedThumbnail.dataset.imgurl;
+    currentImageIndex = parseInt(clickedThumbnail.dataset.index);
+
+    var thumbnails = document.getElementsByClassName('thumbnail');
 
     var lightboxHTML =
     '<div id="lightbox">' +
         '<span id="close">x</span>' +
+        '<span id="left"><</span>' +
+        '<span id="right">></span>' +
         '<div id="content">' +
-            '<img src="' + imageSrc +'" />' +
+            '<img id="lightboxImage" src="' + imageSrc +'" />' +
         '</div>' +  
     '</div>';
 
@@ -81,5 +89,28 @@ function lightboxTrigger() {
     closeButton.onclick = function() {
         var lightbox = document.getElementById('lightbox');
         lightbox.parentNode.removeChild(lightbox);
+    }
+
+    document.onkeydown = function(event) {
+        if (event.keyCode == 27) { // escape key maps to keycode 27
+            var lightbox = document.getElementById('lightbox');
+            lightbox.parentNode.removeChild(lightbox);
+        }
+    }
+
+    var leftButton = document.getElementById('left');
+    leftButton.onclick = function() {
+        var newImage = thumbnails[currentImageIndex - 1].dataset.imgurl;
+        currentImageIndex--; 
+        var lightboxImage = document.getElementById('lightboxImage');
+        lightboxImage.src = newImage;
+    }
+
+    var rightButton = document.getElementById('right');
+    rightButton.onclick = function() {
+        var newImage = thumbnails[currentImageIndex + 1].dataset.imgurl;
+        currentImageIndex++;
+        var lightboxImage = document.getElementById('lightboxImage');
+        lightboxImage.src = newImage;
     }
 }

@@ -65,6 +65,24 @@ h1 {
     cursor: pointer;
 }
 
+#lightbox #left {
+    color: #ffffff;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 150px;
+}
+
+#lightbox #right {
+    color: #ffffff;
+    font-size: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 150px;
+}
+
 #lightbox img {
     max-width: 940px;
     position: absolute;
