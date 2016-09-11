@@ -49,6 +49,7 @@ function buildLightbox(response) {
         thumbnail.className = 'thumbnail';
         thumbnail.style.backgroundImage = "url("+photos[i].url_m+")";
         thumbnail.setAttribute('data-imgUrl', photos[i].url_m);
+        thumbnail.setAttribute('data-title', photos[i].title);
         thumbnail.setAttribute('data-index', i);
 
         grid.appendChild(thumbnail);
@@ -69,6 +70,7 @@ var currentImageIndex = null;
 function lightboxTrigger() {
     var clickedThumbnail = this;
     var imageSrc = clickedThumbnail.dataset.imgurl;
+    var imageTitle = clickedThumbnail.dataset.title;
     currentImageIndex = parseInt(clickedThumbnail.dataset.index);
 
     var thumbnails = document.getElementsByClassName('thumbnail');
@@ -78,9 +80,8 @@ function lightboxTrigger() {
         '<span id="close">x</span>' +
         '<span id="left"><</span>' +
         '<span id="right">></span>' +
-        '<div id="content">' +
-            '<img id="lightboxImage" src="' + imageSrc +'" />' +
-        '</div>' +  
+        '<img id="lightboxImage" src="' + imageSrc +'" />' +
+        '<p id="title">' + imageTitle + '<p>' +
     '</div>';
 
     document.body.insertAdjacentHTML('beforeend', lightboxHTML);
@@ -101,16 +102,24 @@ function lightboxTrigger() {
     var leftButton = document.getElementById('left');
     leftButton.onclick = function() {
         var newImage = thumbnails[currentImageIndex - 1].dataset.imgurl;
+        var newTitle = thumbnails[currentImageIndex - 1].dataset.title;
         currentImageIndex--; 
         var lightboxImage = document.getElementById('lightboxImage');
         lightboxImage.src = newImage;
+
+        var lightboxTitle = document.getElementById('title');
+        lightboxTitle.innerHTML = newTitle;
     }
 
     var rightButton = document.getElementById('right');
     rightButton.onclick = function() {
         var newImage = thumbnails[currentImageIndex + 1].dataset.imgurl;
+        var newTitle = thumbnails[currentImageIndex + 1].dataset.title;
         currentImageIndex++;
         var lightboxImage = document.getElementById('lightboxImage');
         lightboxImage.src = newImage;
+
+        var lightboxTitle = document.getElementById('title');
+        lightboxTitle.innerHTML = newTitle;
     }
 }
