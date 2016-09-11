@@ -114,9 +114,11 @@ function closeLightbox() {
 }
 
 function nextImage(thumbnails) {
-    var newImage = thumbnails[currentImageIndex + 1].dataset.imgurl;
-    var newTitle = thumbnails[currentImageIndex + 1].dataset.title;
-    currentImageIndex++;
+    currentImageIndex = mod(currentImageIndex+1, 20);
+
+    var newImage = thumbnails[currentImageIndex].dataset.imgurl;
+    var newTitle = thumbnails[currentImageIndex].dataset.title;
+
     var lightboxImage = document.getElementById('lightboxImage');
     lightboxImage.src = newImage;
 
@@ -125,12 +127,20 @@ function nextImage(thumbnails) {
 }
 
 function previousImage(thumbnails) {
-    var newImage = thumbnails[currentImageIndex - 1].dataset.imgurl;
-    var newTitle = thumbnails[currentImageIndex - 1].dataset.title;
-    currentImageIndex--; 
+    currentImageIndex = mod(currentImageIndex-1, 20);
+
+    var newImage = thumbnails[currentImageIndex].dataset.imgurl;
+    var newTitle = thumbnails[currentImageIndex].dataset.title;
+
     var lightboxImage = document.getElementById('lightboxImage');
     lightboxImage.src = newImage;
 
     var lightboxTitle = document.getElementById('title');
     lightboxTitle.innerHTML = newTitle;
+}
+
+// Javascripts native modulus function (%) actually behaves like the remainder operator
+// (which returns negative numbers) so this is a proper mod function
+function mod(n, m) {
+    return ((n % m) + m) % m;
 }
