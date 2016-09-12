@@ -89,7 +89,7 @@ h1 {
     cursor: pointer;
     position: absolute;
     top: 50%;
-    left: 200px;
+    left: 175px;
 }
 
 #lightbox #right {
@@ -100,11 +100,12 @@ h1 {
     cursor: pointer;
     position: absolute;
     top: 50%;
-    right: 200px;
+    right: 175px;
 }
 
 #lightbox img {
     max-width: 940px;
+    min-height: 400px;
     position: absolute;
     margin: auto;
     top: 0;

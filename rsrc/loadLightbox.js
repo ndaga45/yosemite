@@ -19,13 +19,18 @@ function loadLightbox() {
 
 // Create thumbnails of images returned from API and add to grid
 function buildLightbox(response) {
-    var parsedResponse = JSON.parse(response);
-    var photos = parsedResponse.photoset.photo;
+    var photoSet = JSON.parse(response).photoset;
+    var photos = photoSet.photo;
 
     // Remove loading gif before creating and adding image thumbnails
     var loading = document.getElementById('loading');
     loading.remove();
 
+    // Title
+    document.title = photoSet.title;
+    document.body.insertAdjacentHTML('afterbegin', '<h1>' + photoSet.title + '</h1>');
+
+    // Thumbnail grid
     var grid = document.getElementById('grid');
     for (var i = 0; i < photos.length; i++) {
         var thumbnail = createThumbnail(photos[i], i);
