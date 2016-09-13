@@ -8,7 +8,7 @@ I'm a huge National Park fan, so I created a gallery of images featuring Norther
 
 Click on any of the image thumbnails to open the lightbox, which can be controlled by both the next/previous/close icons as well as with key presses (ESC to close, right arrow to see the next image, and left arrow to see the previous image).
 
-Additionally, the lightbox was built in a way that any public Flickr album's ID can be passed to it, and the first 20 images from that album will display in the lightbox.
+Additionally, any public Flickr album's ID and a number of images to display can be passed to it, and that number of images from that album will display in the lightbox.
 
 ### Ideas for enhancements
 Some enhancements that could be made:

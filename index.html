@@ -6,9 +6,12 @@
       <link rel="stylesheet" type="text/css" href="rsrc/styles.css">
 
       <script type="text/javascript" src="utils.js"></script>
-      <script type="text/javascript" src="rsrc/loadLightbox.js"></script>
+      <script type="text/javascript" src="rsrc/lightbox.js"></script>
       <script>
-        window.onload = loadLightbox;
+        var photosetID = '72157604010317412';
+        var numImages = 20;
+        var lightbox = new Lightbox(photosetID, numImages);
+        lightbox.load();
       </script>
     </head>
 
