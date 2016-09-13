@@ -15,7 +15,7 @@ h1 {
     left: 50%;
     width: 100px;
     height: 100px;
-    background-image: url('loading.gif');
+    background-image: url('img/loading.gif');
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -80,7 +80,7 @@ h1 {
     top: 50px;
     width: 25px;
     height: 25px;
-    background-image: url('closeIcon.png');
+    background-image: url('img/closeIcon.png');
     background-size: contain;
     font-size: 30px;
     cursor: pointer;
@@ -98,10 +98,10 @@ h1 {
 
 #lightbox #left {
     left: 175px;
-    background-image: url('leftArrowIcon.png');
+    background-image: url('img/leftArrowIcon.png');
 }
 
 #lightbox #right {
     right: 175px;
-    background-image: url('rightArrowIcon.png');
+    background-image: url('img/rightArrowIcon.png');
 }
