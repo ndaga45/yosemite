@@ -1,9 +1,7 @@
 body {
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    padding-left: 20px;
-    padding-right: 20px;
     width: 960px;
     margin: auto;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 h1 {
@@ -13,30 +11,27 @@ h1 {
 
 #loading {
     position: fixed;
-    height: 100px;
+    top: 325px;
+    left: 50%;
     width: 100px;
+    height: 100px;
     background-image: url('loading.gif');
     background-size: contain;
     background-repeat: no-repeat;
-    top: 325px;
-    left: 50%;
-}
-
-#grid {
-    width: 100%;
 }
 
 .thumbnail {
+    float: left;
+    box-sizing: border-box;
     width: 25%;
     height: 230px;
-    float: left;
     padding: 5px;
-    background-clip: content-box;
     background-position: center center;
+    background-clip: content-box;
     cursor: pointer;
-    box-sizing: border-box;
 }
 
+/* Transparent overlay on hover */
 .thumbnail:after {
     content: "";
     display: block;
@@ -45,71 +40,68 @@ h1 {
     background-color: #000000;
     opacity: 0;
 }
-
 .thumbnail:hover:after {
     opacity: 0.4;
 }
 
 #lightbox {
-    color: #ffffff;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.9);
+    color: #ffffff;
 }
 
 #lightbox #title {
-    font-size: 18px;
-    font-weight: 300;
     position: absolute;
     bottom: 10px;
     width: 100%;
+    font-size: 18px;
+    font-weight: 300;
     text-align: center;
 }
 
-#lightbox #close {
-    width: 25px;
-    height: 25px;
-    background-image: url('closeIcon.png');
-    background-size: contain;
-    position: absolute;
-    right: 50px;
-    top: 50px;
-    font-size: 30px;
-    cursor: pointer;
-}
-
-#lightbox #left {
-    width: 30px;
-    height: 30px;
-    background-image: url('leftArrowIcon.png');
-    background-size: contain;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    left: 175px;
-}
-
-#lightbox #right {
-    width: 30px;
-    height: 30px;
-    background-image: url('rightArrowIcon.png');
-    background-size: contain;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    right: 175px;
-}
-
 #lightbox img {
-    max-width: 940px;
-    min-height: 400px;
     position: absolute;
-    margin: auto;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    max-width: 940px;
+    min-height: 400px;
+    margin: auto;
+}
+
+#lightbox #close {
+    position: absolute;
+    right: 50px;
+    top: 50px;
+    width: 25px;
+    height: 25px;
+    background-image: url('closeIcon.png');
+    background-size: contain;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+#lightbox #left,
+#lightbox #right {
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    background-size: contain;
+    cursor: pointer;
+}
+
+#lightbox #left {
+    left: 175px;
+    background-image: url('leftArrowIcon.png');
+}
+
+#lightbox #right {
+    right: 175px;
+    background-image: url('rightArrowIcon.png');
 }
