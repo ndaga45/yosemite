@@ -4,7 +4,7 @@
 
 -Ansel Adams
 
-I'm a huge National Park fan, so I created a gallery of images featuring Northern California's very own Yosemite National Park. Credit for these images go to [Jeffrey Sullivan's Flickr album](https://www.flickr.com/photos/jeffreysullivan/sets/72157604010317412/with/16535808246/).
+I'm a huge National Park fan, so I created a gallery of images featuring Northern California's very own Yosemite National Park. The lightbox is viewed optimally on a 960px wide browser. Credit for these images go to [Jeffrey Sullivan's Flickr album](https://www.flickr.com/photos/jeffreysullivan/sets/72157604010317412/with/16535808246/).
 
 Click on any of the image thumbnails to open the lightbox, which can be controlled by both the next/previous/close icons as well as with key presses (ESC to close, right arrow to see the next image, and left arrow to see the previous image).
 

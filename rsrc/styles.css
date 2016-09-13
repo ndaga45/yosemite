@@ -97,11 +97,11 @@ h1 {
 }
 
 #lightbox #left {
-    left: 175px;
+    left: 150px;
     background-image: url('img/leftArrowIcon.png');
 }
 
 #lightbox #right {
-    right: 175px;
+    right: 150px;
     background-image: url('img/rightArrowIcon.png');
 }

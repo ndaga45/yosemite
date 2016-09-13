@@ -7,6 +7,12 @@ var API_PARAMS = {
     nojsoncallback: 1
 };
 
+/*
+ * @param photosetId: the ID of the Flick album to pull images from
+ * @param numImages: the number of images to pull from the API and to display in the grid of thumbnails
+ * Usage: Call Lightbox.load(<photosetId>, <numImages>) after loading this script and the utils script
+ * to display a gallery of thumbnails that can trigger lightbox view on click.
+ */
 function Lightbox(photosetId, numImages) {
     this.photosetId = photosetId;
     this.numImages = numImages;
